@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
         User user = getUserById(id);
         entityManager.remove(user);
     }
@@ -36,12 +36,19 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         User user = entityManager.find(User.class, id);
         if (user == null) {
             System.out.println("THERE IS NO SUCH USER WITH THIS ID = " + id);
             throw new EntityNotFoundException();
         }
         return user;
+    }
+
+    @Override
+    public User findByUsername(String username) {
+        return entityManager.createQuery("select user from User user where user.username = : username", User.class)
+                .setParameter("username", username)
+                .getSingleResult();
     }
 }

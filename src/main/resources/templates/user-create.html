@@ -23,8 +23,16 @@
        th:errorclass="text-danger" th:errors="*{countryOfBirth}"></p>
     </div>
 
-    <br/>
+    <div>
+        <label for="password"> Enter password: </label>
+        <input type="text" th:field="*{password}" id="password"/>
+    </div>
 
+    <label>Select role:</label>
+    <input type="checkbox" name="checkBoxRoles" value="ROLE_USER"/>USER
+    <input type="checkbox" name="checkBoxRoles" value="ROLE_ADMIN"/>ADMIN
+
+    <br/>
     <input type="submit" value="Create!"/>
 </form>
 </body>

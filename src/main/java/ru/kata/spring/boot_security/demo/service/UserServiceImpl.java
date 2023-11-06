@@ -6,11 +6,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.dao.UserDao;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @Transactional
@@ -24,6 +22,7 @@ public class UserServiceImpl implements UserService {
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -36,9 +35,10 @@ public class UserServiceImpl implements UserService {
         user.setRoles(user.getRoles());
         userDao.addUser(user);
     }
+
     @Transactional
     @Override
-    public void deleteUser(int id) {
+    public void deleteUser(Long id) {
         userDao.deleteUser(id);
     }
 
@@ -50,8 +50,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public User getUserById(int id) {
+    public User getUserById(Long id) {
         return userDao.getUserById(id);
     }
 
+    @Override
+    @Transactional
+    public User findByUsername(String username) {
+        return userDao.findByUsername(username);
+    }
 }

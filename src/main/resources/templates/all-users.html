@@ -14,6 +14,7 @@
     <tr>
         <th scope="col">names</th>
         <th scope="col">countries</th>
+        <th scope="col">passwords</th>
     </tr>
     </thead>
 
@@ -22,6 +23,8 @@
     <tr th:each="user:${users}">
         <td th:text="${user.name}"/>
         <td th:text="${user.countryOfBirth}"/>
+        <td th:text="${user.password}"/>
+
 
         <td>
             <form th:method="UPDATE" th:action="@{admin/delete_user/(id=${user.getId()})}">
@@ -29,22 +32,21 @@
             </form>
         </td>
         <td>
-            <form th:method="UPDATE" th:action="@{admin/update_user(id=${user.getId()})}">
+            <form th:method="UPDATE" th:action="@{admin/update_user/(id=${user.getId()})}">
             <input type = "submit" value="Update"/>
             </form>
         </td>
-
-        <td>
-            <form th:method= "GET" th:action="@{/user}">
-                <input type = "submit"  value="View user's details"/>
-            </form>
-        </td>
-
     </tr>
     </tbody>
 </table>
 
 <a href="/admin/new">Add new user</a>
+
+
+    <form th:method= "GET" th:action="@{/user}">
+        <input type = "submit"  value="View details about user"/>
+    </form>
+
 
 <form th:method="POST" th:action="@{/logout}">
     <input type = "submit"  value="logout"/>

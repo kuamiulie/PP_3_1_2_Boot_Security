@@ -6,10 +6,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import javax.validation.Valid;
+import java.util.Set;
 
 
 @Controller
@@ -32,6 +34,7 @@ public class AdminController {
     @GetMapping("/new")
     public String newUser(Model model) {
             model.addAttribute("user", new User());
+            model.addAttribute("roles", Set.of(new Role("ROLE_USER"), new Role("ROLE_ADMIN")));
             return "user-create";
     }
 
@@ -46,14 +49,14 @@ public class AdminController {
     }
 
     @PostMapping("/update_user")
-    public String updateUser(@RequestParam("id") int id, Model model) {
+    public String updateUser(@RequestParam("id") Long id, Model model) {
         User user = userService.getUserById(id);
         model.addAttribute("user", user);
         return "user-create";
     }
 
     @PostMapping("/delete_user")
-    public String deleteUser(@RequestParam("id") int id) {
+    public String deleteUser(@RequestParam("id") Long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }

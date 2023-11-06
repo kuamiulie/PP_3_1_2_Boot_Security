@@ -12,57 +12,58 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.AUTO)
-        private long id;
+    @NotEmpty(message = "name cannot be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "Name can consist of only letters")
+    @Column(name = "username")
+    private String username;
 
-        @NotEmpty(message = "name cannot be empty")
-        @Pattern(regexp = "[a-zA-Z]+", message = "Name can consist of only letters")
-        @Column(name = "username")
-        private String name;
+    @NotEmpty(message = "Name of your country cannot be empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "Country name can consist of only letters")
+    private String countryOfBirth;
 
-        @NotEmpty(message = "Name of your country cannot be empty")
-        @Pattern(regexp = "[a-zA-Z]+", message = "Country name can consist of only letters")
-        private String countryOfBirth;
+    @Column(name = "password")
+    private String password;
 
-        @Column(name = "password")
-        private String password;
+    @Column
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    private Set<Role> roles;
 
-        @Column
-        @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-        private Set<Role> roles;
+    public User() {
 
-        public User() {
-        }
+    }
 
-        public User(String name, String countryOfBirth, Set<Role> roles) {
-            this.name = name;
-            this.countryOfBirth = countryOfBirth;
-            this.roles = roles;
-        }
+    public User(String name, String countryOfBirth, String password, Set<Role> roles) {
+        this.username = name;
+        this.countryOfBirth = countryOfBirth;
+        this.password = password;
+        this.roles = roles;
+    }
 
-        public long getId() {
+    public long getId() {
             return id;
         }
 
-        public void setId(long id) {
+    public void setId(long id) {
             this.id = id;
         }
 
-        public String getName() {
-            return name;
+    public String getName() {
+            return username;
         }
 
-        public void setName(String name) {
-            this.name = name;
+    public void setName(String name) {
+            this.username = name;
         }
 
-        public String getCountryOfBirth() {
+    public String getCountryOfBirth() {
             return countryOfBirth;
         }
 
-        public void setCountryOfBirth(String countryOfBirth) {
+    public void setCountryOfBirth(String countryOfBirth) {
             this.countryOfBirth = countryOfBirth;
         }
 
@@ -77,7 +78,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return name;
+        return username;
     }
 
     @Override
@@ -104,11 +105,11 @@ public class User implements UserDetails {
             this.password = password;
         }
 
-        public Set<Role> getRoles() {
+    public Set<Role> getRoles() {
             return roles;
         }
 
-        public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<Role> roles) {
             this.roles = roles;
         }
-    }
+}

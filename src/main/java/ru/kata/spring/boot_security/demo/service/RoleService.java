@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Transactional
 public class RoleService {
+
     private RoleRepository roleRepository;
 
     @Autowired
@@ -18,19 +19,34 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
+    @Transactional
+
     public void addRole(Role role) {
         roleRepository.save(role);
     }
+
+    @Transactional
 
     public void updateRole(Role role) {
         roleRepository.saveAndFlush(role);
     }
 
+    @Transactional
+
     public void removeRoleById(long id) { roleRepository.deleteById((long) id); }
 
+    @Transactional
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
+    }
 
-
+    @Transactional
     public Role getRoleByName(String username) {
         return roleRepository.findByRoleName(username);
+    }
+
+    @Transactional
+    public Role getRoleById(Long id) {
+        return roleRepository.getById(id);
     }
 }

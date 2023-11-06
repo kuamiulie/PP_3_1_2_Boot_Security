@@ -1,14 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+
+<!--    <title>UserPage</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<p>Name</p>-->
+<!--<p th:text="${user.getName()}"></p>-->
+<!--<p>Country of origin</p>-->
+<!--<p th:text="${user.getCountryOfBirth()}"></p>-->
+
+<!--<form th:method="POST" th:action="@{/logout}">-->
+<!--    <input type = "submit"  value="logout"/>-->
+<!--</form>-->
+
+<!--</body>-->
+<!--</html>-->
+
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="EN">
 <head>
-    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>UserPage</title>
+    <title>user table</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-<p>Name</p>
-<p th:text="${user.getName()}">VALUE</p>
-<p>Country of origin</p>
-<p th:text="${user.getCountryOfBirth()}">VALUE</p>
+<h1>USER HOMEPAGE</h1>
+
+<table class="table table-dark">
+    <thead>
+    <tr>
+        <th scope="col">name</th>
+        <th scope="col">country</th>
+    </tr>
+    </thead>
+
+
+    <tbody>
+        <td th:text="${user.getName()}"/>
+        <td th:text="${user.getCountryOfBirth()}"/>
+    </tbody>
+</table>
+
 
 <form th:method="POST" th:action="@{/logout}">
     <input type = "submit"  value="logout"/>
@@ -16,3 +53,4 @@
 
 </body>
 </html>
+

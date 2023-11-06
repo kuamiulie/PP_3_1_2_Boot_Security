@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
 <head>
-    <title>Spring Security Example</title>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>UserPage</title>
 </head>
 <body>
-<h1>User, welcome spring boot security page!</h1>
+<p>Name</p>
+<p th:text="${user.getName()}">VALUE</p>
+<p>Country of origin</p>
+<p th:text="${user.getCountryOfBirth()}">VALUE</p>
 
+<form th:method="POST" th:action="@{/logout}">
+    <input type = "submit"  value="logout"/>
+</form>
 
 </body>
 </html>

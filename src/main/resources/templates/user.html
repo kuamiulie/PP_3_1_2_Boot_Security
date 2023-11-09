@@ -1,56 +1,76 @@
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">-->
-<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
-
-<!--    <title>UserPage</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<p>Name</p>-->
-<!--<p th:text="${user.getName()}"></p>-->
-<!--<p>Country of origin</p>-->
-<!--<p th:text="${user.getCountryOfBirth()}"></p>-->
-
-<!--<form th:method="POST" th:action="@{/logout}">-->
-<!--    <input type = "submit"  value="logout"/>-->
-<!--</form>-->
-
-<!--</body>-->
-<!--</html>-->
-
-
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" lang="EN">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>user table</title>
     <meta charset="UTF-8">
-    <link rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>User Page</title>
 </head>
 <body>
-<h1>USER HOMEPAGE</h1>
-
-<table class="table table-dark">
-    <thead>
-    <tr>
-        <th scope="col">name</th>
-        <th scope="col">country</th>
-    </tr>
-    </thead>
-
-
-    <tbody>
-        <td th:text="${user.getName()}"/>
-        <td th:text="${user.getCountryOfBirth()}"/>
-    </tbody>
-</table>
+<nav class="navbar navbar-dark bg-dark d-flex justify-content-between">
+    <span>
+    <span class="navbar-brand"
+          th:text="${user.username} + 'with roles: ' + ${user.getStringRoles()}"></span>
+    </span>
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+        </li>
+    </ul>
+</nav>
 
 
-<form th:method="POST" th:action="@{/logout}">
-    <input type = "submit"  value="logout"/>
-</form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-2 bg-white">
+            <nav class="nav flex-column nav-pills">
 
+                <a href="/admin" class="nav-link">Admin</a>
+
+                <a class="nav-link active" href="/user">User</a>
+            </nav>
+        </div>
+
+        <div class="col-10 bg-light">
+            <h2>User information-page</h2>
+            </br>
+            </br>
+            <table class="table table-light table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">name</th>
+                    <th scope="col">country</th>
+                    <th scope="col">password</th>
+                    <th scope="col">role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td th:text="${user.id}">Id</td>
+                    <td th:text="${user.username}">Username</td>
+                    <td th:text="${user.countryOfBirth}">Country</td>
+                    <td th:text="${user.password}">Password</td>
+                    <td th:text="${user.getStringRoles()}">Roles</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"
+        integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js"
+        integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc"
+        crossorigin="anonymous"></script>
 </body>
 </html>
-

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
@@ -18,10 +17,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public String currentUserName(Principal principal, Model model) {
-        String username = principal.getName();
-        User user = userService.findByUsername(username);
-        model.addAttribute("user", user);
+    public String currentUserName(Principal user, Model model) {
+        model.addAttribute("user", userService.findByUsername(user.getName()));
         return "user";
     }
 }

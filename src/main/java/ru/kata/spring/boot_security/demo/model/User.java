@@ -18,7 +18,6 @@ public class User implements UserDetails {
 
     @NotEmpty(message = "name cannot be empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "Name can consist of only letters")
-    @Column(name = "username")
     private String username;
 
     @NotEmpty(message = "Name of your country cannot be empty")
@@ -112,4 +111,12 @@ public class User implements UserDetails {
     public void setRoles(Set<Role> roles) {
             this.roles = roles;
         }
+
+    public String getStringRoles() {
+        StringBuilder s = new StringBuilder();
+        for (Role role: roles) {
+            s.append(role.getName().substring(5));
+        }
+        return String.valueOf(s);
+    }
 }

@@ -5,11 +5,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImpl;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.util.UniqueNameAnnotation;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -19,14 +21,16 @@ import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
+@Validated
 public class AdminController {
+
 
     private final UserService userService;
 
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
 
     @Autowired
-    public AdminController(UserService userService, RoleService roleService) {
+    public AdminController(UserService userService, RoleServiceImpl roleService) {
         this.userService = userService;
         this.roleService = roleService;
     }
@@ -40,11 +44,14 @@ public class AdminController {
     }
 
     @PostMapping("/save_user")
-    public String saveUser(@ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult, @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
+    @UniqueNameAnnotation(message = "NAME IS ALREADY USED")
+    public String saveUser(@ModelAttribute(value = "user") @Valid User user, BindingResult bindingResult,
+                           @RequestParam(value = "checkBoxRoles") String[] checkBoxRoles) {
         if (bindingResult.hasErrors()) {
             System.out.println("BINDING RESULT ERROR");
             return "all-users";
         }
+
         Set<Role> roleSet = new HashSet<>();
         for (String roles : checkBoxRoles) {
             roleSet.add(roleService.getRoleByName(roles));

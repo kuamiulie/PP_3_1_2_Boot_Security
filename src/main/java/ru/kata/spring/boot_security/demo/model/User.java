@@ -18,6 +18,7 @@ public class User implements UserDetails {
 
     @NotEmpty(message = "name cannot be empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "Name can consist of only letters")
+    @Column
     private String username;
 
     @NotEmpty(message = "Name of your country cannot be empty")
@@ -28,7 +29,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Set<Role> roles;
 
     public User() {
@@ -114,8 +115,8 @@ public class User implements UserDetails {
 
     public String getStringRoles() {
         StringBuilder s = new StringBuilder();
-        for (Role role: roles) {
-            s.append(role.getName().substring(5));
+        for (Role role : roles) {
+            s.append(" ").append(role.getName().substring(5));
         }
         return String.valueOf(s);
     }

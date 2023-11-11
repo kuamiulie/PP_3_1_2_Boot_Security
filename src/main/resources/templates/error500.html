@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>error 500</title>
+</head>
+<body>
+    YOUR DATA IS INVALID.
+    <BR>
+    REMEMBER:
+    <BR>
+       1. NAME AND COUNTRY OF YOUR ORIGIN CANNOT BE BLANK OR CONSIST OF NON-LITERAL VALUES.
+    <BR>
+       2. YOUR USERNAME IS PROBABLY ALREADY USED, TAKE ANOTHER ONE.
+    <BR>
+    <p><span  th:text="'YOUR ERROR IS' + ${error}"></span> </p>
+
+    <BR>
+    RESTART THE APPLICATION IN ORDER TO CONTINUE WORKING!!!
+</body>
+</html>

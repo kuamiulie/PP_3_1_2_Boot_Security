@@ -11,7 +11,7 @@
 
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
-        <span class="navbar-brand" th:text="${user.getName()} + ' with roles: ' + ${user.getStringRoles()}"></span>
+        <span class="navbar-brand" th:text="${user.username} + ' with roles: ' + ${user.stringRoles}"></span>
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
@@ -95,28 +95,36 @@
                                         </div>
                                         <div class="modal-body">
                                             <div style="text-align: center;">
-                                                <div class="row justify-content-center align-items-center">
+                                                <div class="row justify-content-center align-items-center" th:object="${user}">
                                                     <form class="text-center" th:action="@{/admin/save_user}"
-                                                          th:object="${user}"
                                                           th:method="UPDATE" th:id="${'editor' + user.id}">
                                                     <div class="form-group font-weight-bold">
                                                             <label for="id">ID</label>
                                                             <input type="number" class="form-control" id="id"
                                                                    name="id" th:value="${user.getId()}" readonly>
                                                             <br>
-
                                                             <label for="editName">Name</label>
                                                             <input type="text" class="form-control"
                                                                id="editName"
                                                                name="name" th:value="${user.username}">
-
+                                                            <div class="text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                                                 <p>Incorrect Class Name</p>
+                                                            </div>
+                                                            <br>
                                                             <label for="editCountryOfBirth">Country Of Birth</label>
                                                             <input type="text" class="form-control" id="editCountryOfBirth"
                                                                    name="countryOfBirth" th:value="${user.getCountryOfBirth()}">
+                                                            <div class="text text-danger" th:if="${#fields.hasErrors('countryOfBirth')}" th:errors="*{countryOfBirth}">
+                                                                  <p>Incorrect Class Name</p>
+                                                            </div>
+                                                            <br>
                                                             <label for="editPassword">Password</label>
                                                             <input type="password" class="form-control"
                                                                    id="editPassword"
                                                                    name="password" th:value="${user.getPassword()}">
+                                                            <div class="text text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                                                                 <p>Incorrect Class Name</p>
+                                                            </div>
                                                             <br>
                                                             <label for="editRole">Role</label>
                                                             <select class="form-select w-100" size="2" id="editRole"
@@ -223,10 +231,11 @@
                                     <option th:each="role : ${roles}"
                                             th:text="${role.getName()}" selected></option>
                                 </select>
-
+                                <br>
                                 <button type="submit" class="btn btn-success">Add new user</button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

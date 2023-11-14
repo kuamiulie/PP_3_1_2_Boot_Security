@@ -3,22 +3,31 @@ package ru.kata.spring.boot_security.demo.model;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "users")
 public class User implements UserDetails {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @NotEmpty(message = "name cannot be empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "Name can consist of only letters")
-    @Column
     private String username;
 
     @NotEmpty(message = "Name of your country cannot be empty")
@@ -113,11 +122,16 @@ public class User implements UserDetails {
             this.roles = roles;
         }
 
-    public String getStringRoles() {
-        StringBuilder s = new StringBuilder();
-        for (Role role : roles) {
-            s.append(" ").append(role.getName().substring(5));
-        }
-        return String.valueOf(s);
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user1 = (User) o;
+        return Objects.equals(getUsername(), user1.getUsername()) && Objects.equals(getCountryOfBirth(), user1.getCountryOfBirth());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getUsername(), getCountryOfBirth());
     }
 }

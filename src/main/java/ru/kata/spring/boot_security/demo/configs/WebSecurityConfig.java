@@ -21,7 +21,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private SuccessUserHandler successUserHandler;
 
-
     @Autowired
     public void setSuccessUserHandler(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
@@ -32,13 +31,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.userDetailService = userDetailService;
     }
 
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
+                .antMatchers("/users").hasRole("ADMIN")
                 .antMatchers("/user").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/api/authority").hasAnyRole("USER", "ADMIN")
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().successHandler(successUserHandler)

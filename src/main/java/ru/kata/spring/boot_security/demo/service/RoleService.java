@@ -6,7 +6,5 @@ public interface RoleService {
 
     void addRole(Role role);
 
-    Role getRoleByName(String username);
-
     Role getRoleById(Long id);
 }

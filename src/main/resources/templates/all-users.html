@@ -146,7 +146,7 @@
 
                     }
                 })
-                $('#deleter').click(function () {
+                $('#deleter').click(function (event) {
                 // jQuery.on("click", $('#deleter'), function (event)
 
                     event.preventDefault();
@@ -169,11 +169,10 @@
                         contentType: 'application/json',
                         data: JSON.stringify(user),
                         success: function (res) {
-                            // update();
-
-                            // $('#delete').modal('hide');
-                            // $('#closedelete').click(
-                            // );
+                            update();
+                            $('#delete').modal('hide');
+                            $('#closedelete').click(
+                            );
                         },
                         // error: function (e) {
                         //
@@ -240,6 +239,7 @@
                                 alert('Error' + jqXHR.responseText );
                             }
                         }
+
                     })
                 })
             });

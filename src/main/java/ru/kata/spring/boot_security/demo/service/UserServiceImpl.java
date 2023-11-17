@@ -2,6 +2,9 @@ package ru.kata.spring.boot_security.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,8 +12,10 @@ import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repositories.RoleRepository;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.model.User;
+import ru.kata.spring.boot_security.demo.util.AlreadyTakenUserNameException;
 
-import java.util.*;
+import javax.persistence.EntityNotFoundException;
+
 
 @Service
 @Transactional
@@ -50,6 +55,13 @@ public class UserServiceImpl implements UserService {
         Optional<String> roleName;
         Set<Role> roles = new HashSet<>();
 
+        User userEntity = repository.findByUsername(user.getName());
+        if (userEntity != null) {
+            if (!userEntity.getName().equals(user.getName()) | userEntity.getId() != user.getId()) {
+                throw new AlreadyTakenUserNameException("THIS USERNAME IS ALREADY USED");
+            }
+        }
+
         for (Role role: user.getRoles()) {
             id = role.getId();
             roleName = Optional.ofNullable(role.getName());
@@ -67,9 +79,9 @@ public class UserServiceImpl implements UserService {
             repository.save(user);
             roleRepository.saveAll(user.getRoles());
         } else {
-            roleRepository.saveAll(user.getRoles());
-            user.setRoles(user.getRoles());
             repository.save(user);
+            roleRepository.saveAll(user.getRoles());
+
         }
     }
 
@@ -88,6 +100,13 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
-        return repository.findByUsername(username);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        User userEntity = repository.findByUsername(name);
+        if (userEntity == null) {
+            throw new EntityNotFoundException("NO SUCH USER");
+        }
+        return userEntity;
     }
 }

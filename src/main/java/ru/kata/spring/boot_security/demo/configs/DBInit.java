@@ -18,6 +18,7 @@ public class DBInit {
 
     private UserService userService;
 
+
     @Autowired
     public DBInit(UserServiceImpl userService) {
         this.userService = userService;
@@ -26,10 +27,12 @@ public class DBInit {
     @PostConstruct
     public void run() {
 
+
         Set<Role> adminRole = new HashSet<>();
         Set<Role> userRole = new HashSet<>();
         adminRole.add(new Role("ROLE_ADMIN"));
         userRole.add(new Role("ROLE_USER"));
+
 
         userService.addUser(new User("Amir", "Russia", "1234", adminRole));
         userService.addUser(new User("Andrew", "Russia", "12345", userRole));
